@@ -19,7 +19,7 @@
           },
           {
             expr: |||
-              sum by (namespace, pod) (kube_pod_status_phase{%(kubeStateMetricsSelector)s, phase!~"Running|Succeeded"}) > 0
+              sum by (kubernetes_namespace, %(podLabel)s) (kube_pod_status_phase{%(kubeStateMetricsSelector)s, phase!~"Running|Succeeded"}) > 0
             ||| % $._config,
             labels: {
               severity: 'critical',

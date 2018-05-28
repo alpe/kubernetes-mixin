@@ -1,21 +1,18 @@
 {
   _config+:: {
     // Selectors are inserted between {} in Prometheus queries.
-    cadvisorSelector: 'job="cadvisor"',
-    kubeletSelector: 'job="kubelet"',
-    kubeStateMetricsSelector: 'job="kube-state-metrics"',
-    nodeExporterSelector: 'job="node-exporter"',
+    cadvisorSelector: 'job="kubernetes-cadvisor"',
+    kubeletSelector: 'job="kubernetes-nodes"',
+    kubeStateMetricsSelector: 'app="kube-state-metrics",component="core",job="kubernetes-service-endpoints"',
+    nodeExporterSelector: 'app="prometheus",component="node-exporter"',
     notKubeDnsSelector: 'job!="kube-dns"',
-    kubeSchedulerSelector: 'job="kube-scheduler"',
-    kubeControllerManagerSelector: 'job="kube-controller-manager"',
-    kubeApiserverSelector: 'job="kube-apiserver"',
-    podLabel: 'pod',
+    kubeApiserverSelector: 'job="kubernetes-apiservers"',
+    podLabel: 'kubernetes_pod_name',
+    namespaceLabel: 'kubernetes_namespace',
 
     // We build alerts for the presence of all these jobs.
     jobs: {
       Kubelet: $._config.kubeletSelector,
-      KubeScheduler: $._config.kubeSchedulerSelector,
-      KubeControllerManager: $._config.kubeControllerManagerSelector,
       KubeAPI: $._config.kubeApiserverSelector,
     },
 

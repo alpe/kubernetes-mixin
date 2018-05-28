@@ -103,7 +103,7 @@
             expr: |||
               sum(rate(apiserver_request_count{%(kubeApiserverSelector)s,code=~"^(?:5..)$"}[5m])) without(instance, %(podLabel)s)
                 /
-              sum(rate(apiserver_request_count{%(kubeApiserverSelector)s}[5m])) without(instance, pod) * 100 > 5
+              sum(rate(apiserver_request_count{%(kubeApiserverSelector)s}[5m])) without(instance, %(podLabel)s) * 100 > 5
             ||| % $._config,
             'for': '10m',
             labels: {
@@ -118,7 +118,7 @@
             expr: |||
               sum(rate(apiserver_request_count{%(kubeApiserverSelector)s,code=~"^(?:5..)$"}[5m])) without(instance, %(podLabel)s)
                 /
-              sum(rate(apiserver_request_count{%(kubeApiserverSelector)s}[5m])) without(instance, pod) * 100 > 5
+              sum(rate(apiserver_request_count{%(kubeApiserverSelector)s}[5m])) without(instance, %(podLabel)s) * 100 > 5
             ||| % $._config,
             'for': '10m',
             labels: {
