@@ -73,7 +73,7 @@ local g = import '../lib/grafana.libsonnet';
         .addPanel(
           g.panel('Disk Capacity') +
           g.queryPanel(|||
-            sum(max(node_filesystem_size_bytes{fstype=~"ext[24]"} - node_filesystem_avail_bytes{fstype=~"ext[24]"}) by (device,%(podLabel)s,namespace)) by (%(podLabel)s,namespace) / scalar(sum(max(node_filesystem_size_bytes{fstype=~"ext[24]"}) by (device,%(podLabel)s,namespace))) * on (namespace, %(podLabel)s) group_left(node) node_namespace_pod:kube_pod_info:
+            sum(max(node_filesystem_size_bytes{fstype=~"ext[24]"} - node_filesystem_avail_bytes{fstype=~"ext[24]"}) by (device,%(podLabel)s,%(namespaceLabel)s)) by (%(podLabel)s,%(namespaceLabel)s) / scalar(sum(max(node_filesystem_size_bytes{fstype=~"ext[24]"}) by (device,%(podLabel)s,%(namespaceLabel)s))) * on (%(namespaceLabel)s, %(podLabel)s) group_left(node) node_namespace_pod:kube_pod_info:
           ||| % $._config, '{{node}}', legendLink) +
           g.stack +
           { yaxes: g.yaxes({ format: 'percentunit', max: 1 }) },
